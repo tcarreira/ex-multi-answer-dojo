@@ -303,7 +303,7 @@ def timedout_test():
 
 def run_tests(
     n=1000, only=None, timeout=1, max_mem_mb=200, hide_reason=False, ignore_skip=False
-):
+) -> int:
     tests_with_timeout = [
         test_append,
         test_pop,
@@ -323,27 +323,30 @@ def run_tests(
         check_100k_big_elements_any_str,
     ]
 
+    err_count = 0
     if only is not None and only not in [t.__name__ for t in tests_with_timeout]:
         t = globals()[only]
-        run_this_unit_test(only, n, timeout, max_mem_mb, hide_reason, 10, t)
+        err_count += run_this_unit_test(only, n, timeout, max_mem_mb, hide_reason, 10, t)
 
     for i, t in enumerate(tests_with_timeout):
         if only != t.__name__ and t in skip and not ignore_skip:
             continue
         try:
-            run_this_unit_test(only, n, timeout, max_mem_mb, hide_reason, i, t)
+            err_count += run_this_unit_test(only, n, timeout, max_mem_mb, hide_reason, i, t)
         except StopEarlier:
             break
+
+    return err_count
 
 
 class StopEarlier(Exception):
     pass
 
 
-def run_this_unit_test(only, n, timeout, max_mem_mb, hide_reason, i, t):
+def run_this_unit_test(only, n, timeout, max_mem_mb, hide_reason, i, t) -> bool:
     reason = None
     if only is not None and t.__name__ != only:
-        return
+        return True
     if only is None and i >= n:
         raise StopEarlier
     try:
@@ -379,12 +382,16 @@ def run_this_unit_test(only, n, timeout, max_mem_mb, hide_reason, i, t):
     sys.stdout.write("" * 180 + "\r")
     sys.stdout.flush()
     print(f"{i+1:02d}. {out}")
+    return bool(reason)
+
+def main():
+    return run_tests(7, hide_reason=True)
+    # return run_tests(7)
+    # return run_tests()
+    # return run_tests(only="check_1M_unique_elements")
+    # return run_tests(only="check_5M_unique_elements_str_number_only")
+    # return run_tests(ignore_skip=True)
 
 
 if __name__ == "__main__":
-    run_tests(7, hide_reason=True)  # run only the first 7 tests, and do NOT show the reason of failure
-    # run_tests(7) # run only the first 7 tests, showing the reason of failure
-    # run_tests() # run all default tests
-    # run_tests(only="check_1M_unique_elements") # run only the test named "check_1M_unique_elements"
-    # run_tests(only="check_5M_unique_elements_str_number_only")  # This is a hidden test (advanced!)
-    # run_tests(ignore_skip=True) # run all tests, including the hidden ones
+    raise SystemExit(main())

@@ -27,13 +27,13 @@ class Algorithm(BootstrapAlgorithm):
 def main():
     from solution_test import run_tests
 
-    run_tests(7, hide_reason=True)  # run only the first 7 tests, and do NOT show the reason of failure
-    # run_tests(7) # run only the first 7 tests, showing the reason of failure
-    # run_tests() # run all default tests
-    # run_tests(only="check_1M_unique_elements") # run only the test named "check_1M_unique_elements"
-    # run_tests(only="check_5M_unique_elements_str_number_only")  # This is a hidden test (advanced!)
-    # run_tests(ignore_skip=True) # run all tests, including the hidden ones
+    return run_tests(7, hide_reason=True)
+    # return run_tests(7)
+    # return run_tests()
+    # return run_tests(only="check_1M_unique_elements")
+    # return run_tests(only="check_5M_unique_elements_str_number_only")
+    # return run_tests(ignore_skip=True)
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
