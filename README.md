@@ -10,6 +10,7 @@ Tests will have a timeout, so choose the right data structure and algorithm for 
 ```
 git clone https://github.com/tcarreira/ex-multi-answer-dojo.git
 cd ex-multi-answer-dojo
+python3 solution.py
 ```
 
 ## Run first tests
@@ -17,9 +18,9 @@ cd ex-multi-answer-dojo
 ```sh
 $ ./solution.py
 01. ✘ test_append
-02. ✘ test_pop
-03. ✘ test_len
-04. ✘ test_check
+02. ✘ test_len
+03. ✘ test_check
+04. ✘ test_pop
 05. ✘ check_non_existing_elements
 06. ✘ insert_unique
 07. ✘ insert_with_repeats
@@ -51,9 +52,9 @@ run_tests(ignore_skip=True) # run all tests, including the hidden ones
 | test name                                | constraint     | level  |
 | ---------------------------------------- | -------------- | ------ |
 | test_append                              | implementation | easy   |
-| test_pop                                 | implementation | easy   |
 | test_len                                 | implementation | easy   |
 | test_check                               | implementation | easy   |
+| test_pop                                 | implementation | easy   |
 | check_non_existing_elements              | implementation | easy   |
 | insert_unique                            | implementation | easy   |
 | insert_with_repeats                      | implementation | easy   |

@@ -306,9 +306,9 @@ def run_tests(
 ) -> int:
     tests_with_timeout = [
         test_append,
-        test_pop,
         test_len,
         test_check,
+        test_pop,
         check_non_existing_elements,
         insert_unique,
         insert_with_repeats,
