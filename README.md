@@ -15,7 +15,7 @@ cd ex-multi-answer-dojo
 ## Run first tests
 
 ```sh
-$ python3 solution.py
+$ ./solution.py
 01. ✘ test_append
 02. ✘ test_pop
 03. ✘ test_len
