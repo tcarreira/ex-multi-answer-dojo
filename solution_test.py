@@ -212,23 +212,19 @@ def setup_check_1M_unique_elements():
 
 def check_5M_unique_elements_str_number_only(a, start, end, step):
     # depends on setup_check_5M_unique_elements_str_number_only
+    factor = 50
     if len(a) != 5_000_000:
         raise AlgorithmError("len() not 5M", len(a))
 
-    for i in range(start, end, step * 200):  # existing element
+    for i in range(start, end // factor, step):  # existing element
         if not a.check(f"{i}"):
             raise AlgorithmError(f"'{i}' not found")
 
     false_positives = 0
-    r1 = range(start, 200 * step)
-    r2 = range(50_000, 50_000 + 200 * step)
-    r2 = range(5_000_000, 50_000 + 200 * step)
-    for i in chain(r1, r2):  # non-existing
-        if (i - start) % step == 0:
-            continue
+    for i in range(start + 1, end // factor, step):  # existing element
         if a.check(f"{i}"):
             false_positives += 1
-    if false_positives > (len(r1) + len(r2)) * 0.001:
+    if false_positives > 5_000_000 // factor * 0.001:
         raise AlgorithmError(f"Too many false positives: {false_positives}")
 
     sys.stdout.write(" " * 47 + f"(fp={false_positives})" + "\r")
@@ -239,19 +235,61 @@ def setup_check_5M_unique_elements_str_number_only():
     s = "__. \033[34m?\033[0m Running setup for setup_check_5M_unique_elements_str_number_only... ({})\r"
 
     a = Algorithm()
-    if not hasattr(a, "set_check_only"):
-        raise AlgorithmError("set_check_only() not implemented")
+    if not hasattr(a, "set_check_mode"):
+        raise AlgorithmError("set_check_mode() not implemented")
+    a.__dict__["set_check_mode"](1)
 
-    a.__dict__["set_check_only"]()
-
-    start = 123  # random.randint(0, 500)
-    step = 50  # random.randint(300, 500)
+    start = 0  # random.randint(0, 500)
+    step = 2  # random.randint(300, 500)
     end = 5_000_000 * step + start
     for i in range(start, end, step):
-        if (i - start) % (step * 5000) == 0:
+        if (i - start) % (step * 10000) == 0:
             sys.stdout.write(s.format(f"{int(i/end*100)}%"))
             sys.stdout.flush()
         a.append(f"{i}")
+
+    sys.stdout.write(" " * 120 + "\r")
+    sys.stdout.flush()
+    return (a, start, end, step)
+
+
+def check_100k_big_elements_any_str(a, start, end, step):
+    # depends on setup_check_100k_big_elements_any_str
+    factor = 10
+    if len(a) != 100_000:
+        raise AlgorithmError("len() not 5M", len(a))
+
+    for i in range(start, end // factor, step):  # existing element
+        if not a.check(f"big element {i} {'a'*10000}"):
+            raise AlgorithmError(f"'big element {i} {'a'*10000}' not found")
+
+    false_positives = 0
+    for i in range(start + 1, end // factor, step):  # existing element
+        if a.check(f"big element {i} {'a'*10000}"):
+            false_positives += 1
+    if false_positives > 100_000 // factor * 0.01:
+        raise AlgorithmError(f"Too many false positives: {false_positives}")
+
+    sys.stdout.write(" " * 38 + f"(fp={false_positives})" + "\r")
+    return a
+
+
+def setup_check_100k_big_elements_any_str():
+    s = "__. \033[34m?\033[0m Running setup for setup_check_100k_big_elements_any_str... ({})\r"
+
+    a = Algorithm()
+    if not hasattr(a, "set_check_mode"):
+        raise AlgorithmError("set_check_mode() not implemented")
+    a.__dict__["set_check_mode"](2)
+
+    start = 0  # random.randint(0, 500)
+    step = 2  # random.randint(300, 500)
+    end = 100_000 * step + start
+    for i in range(start, end, step):
+        if (i - start) % (step * 1000) == 0:
+            sys.stdout.write(s.format(f"{int(i/end*100)}%"))
+            sys.stdout.flush()
+        a.append(f"big element {i} {'a'*10000}")
 
     sys.stdout.write(" " * 120 + "\r")
     sys.stdout.flush()
@@ -278,9 +316,11 @@ def run_tests(
         insert_500k_with_repeats,
         check_1M_unique_elements,
         check_5M_unique_elements_str_number_only,
+        check_100k_big_elements_any_str,
     ]
     skip = [
         check_5M_unique_elements_str_number_only,
+        check_100k_big_elements_any_str,
     ]
 
     if only is not None and only not in [t.__name__ for t in tests_with_timeout]:
