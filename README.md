@@ -62,3 +62,28 @@ run_tests(ignore_skip=True) # run all tests, including the hidden ones
 | check_1M_unique_elements                 | time           | medium |
 | check_5M_unique_elements_str_number_only | memory + time  | hard   |
 | check_100k_big_elements_any_str          | memory         | hard   |
+
+### Hard tests
+
+`check_5M_unique_elements_str_number_only`
+
+- setup test with 5M appends (not time bounded)
+  - all appended items are strings with only an integer (eg: "1", "42", "123", "5382165")
+  - this many items should not fit on our memory constraints using regular methods. Another strategy is expected.
+- the test consists of running a `check()` on part of those inserted items
+- requirements:
+  - true positives: 100%
+  - false positives: 0.1%
+  - false negatives: 0%
+  - true negatives: 99.9%
+
+`check_100k_big_elements_any_str`
+
+- setup test with 100k appends (not time bounded)
+  - all appended items are big strings (>20000 chars)
+- the test consists of running a `check()` on all of those inserted items
+- requirements:
+  - true positives: 100%
+  - false positives: 0.1%
+  - false negatives: 0%
+  - true negatives: 99.9%

@@ -289,7 +289,7 @@ def setup_check_100k_big_elements_any_str():
         if (i - start) % (step * 1000) == 0:
             sys.stdout.write(s.format(f"{int(i/end*100)}%"))
             sys.stdout.flush()
-        a.append(f"big element {i} {'a'*10000}")
+        a.append(f"big element {i} {'a'*20000}")
 
     sys.stdout.write(" " * 120 + "\r")
     sys.stdout.flush()
@@ -330,6 +330,8 @@ def run_tests(
 
     for i, t in enumerate(tests_with_timeout):
         if only != t.__name__ and t in skip and not ignore_skip:
+            continue
+        if only is not None and only != t.__name__:
             continue
         try:
             err_count += run_this_unit_test(only, n, timeout, max_mem_mb, hide_reason, i, t)
