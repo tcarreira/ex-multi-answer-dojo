@@ -195,7 +195,7 @@ def check_1M_unique_elements(a):
 
 def setup_check_1M_unique_elements():
     sys.stdout.write(
-        f"__. \033[34m?\033[0m Running setup for setup_check_1M_unique_elements...\r"
+        f"__. \033[34m?\033[0m Running setup for check_1M_unique_elements...\r"
     )
     sys.stdout.flush()
 
@@ -232,12 +232,12 @@ def check_5M_unique_elements_str_number_only(a, start, end, step):
 
 
 def setup_check_5M_unique_elements_str_number_only():
-    s = "__. \033[34m?\033[0m Running setup for setup_check_5M_unique_elements_str_number_only... ({})\r"
+    s = "__. \033[34m?\033[0m Running setup for check_5M_unique_elements_str_number_only... ({})\r"
 
     a = Algorithm()
     if not hasattr(a, "set_check_mode"):
         raise AlgorithmError("set_check_mode() not implemented")
-    a.__dict__["set_check_mode"](1)
+    getattr(a, "set_check_mode")(1)
 
     start = 0  # random.randint(0, 500)
     step = 2  # random.randint(300, 500)
@@ -275,12 +275,12 @@ def check_100k_big_elements_any_str(a, start, end, step):
 
 
 def setup_check_100k_big_elements_any_str():
-    s = "__. \033[34m?\033[0m Running setup for setup_check_100k_big_elements_any_str... ({})\r"
+    s = "__. \033[34m?\033[0m Running setup for check_100k_big_elements_any_str... ({})\r"
 
     a = Algorithm()
     if not hasattr(a, "set_check_mode"):
         raise AlgorithmError("set_check_mode() not implemented")
-    a.__dict__["set_check_mode"](2)
+    getattr(a, "set_check_mode")(2)
 
     start = 0  # random.randint(0, 500)
     step = 2  # random.randint(300, 500)
