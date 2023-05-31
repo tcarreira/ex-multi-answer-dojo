@@ -48,17 +48,17 @@ run_tests(ignore_skip=True) # run all tests, including the hidden ones
 
 ## List of tests
 
-| test name                                | constraint     |
-| ---------------------------------------- | -------------- |
-| test_append                              | implementation |
-| test_pop                                 | implementation |
-| test_len                                 | implementation |
-| test_check                               | implementation |
-| check_non_existing_elements              | implementation |
-| insert_unique                            | implementation |
-| insert_with_repeats                      | implementation |
-| insert_500k_unique                       | time           |
-| insert_500k_with_repeats                 | time           |
-| check_1M_unique_elements                 | time           |
-| check_5M_unique_elements_str_number_only | memory + time  |
-| check_100k_big_elements_any_str          | memory         |
+| test name                                | constraint     | level  |
+| ---------------------------------------- | -------------- | ------ |
+| test_append                              | implementation | easy   |
+| test_pop                                 | implementation | easy   |
+| test_len                                 | implementation | easy   |
+| test_check                               | implementation | easy   |
+| check_non_existing_elements              | implementation | easy   |
+| insert_unique                            | implementation | easy   |
+| insert_with_repeats                      | implementation | easy   |
+| insert_500k_unique                       | time           | easy+  |
+| insert_500k_with_repeats                 | time           | easy+  |
+| check_1M_unique_elements                 | time           | medium |
+| check_5M_unique_elements_str_number_only | memory + time  | hard   |
+| check_100k_big_elements_any_str          | memory         | hard   |
