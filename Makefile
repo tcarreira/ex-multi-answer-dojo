@@ -10,9 +10,12 @@ watch-vscode:
 			echo ; \
 			date ; \
 			$(MAKE) gray ; \
-			python solution.py && $(MAKE) green || $(MAKE) red ; \
+			python3 solution.py && $(MAKE) green || $(MAKE) red ; \
 			prev=$$latest; \
 		done;
+
+test:
+	python3 solution.py
 
 latest-time:
 	@find . -type f -name "*.py" -exec stat -f %Sm  -t %s {} \; | sort -r | head -n1
